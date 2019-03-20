@@ -232,11 +232,16 @@ class ResnetBuilder(object):
         block_shape = K.int_shape(block)
         pool2 = AveragePooling2D(pool_size=(block_shape[ROW_AXIS], block_shape[COL_AXIS]),
                                  strides=(1, 1))(block)
-        flatten1 = Flatten()(pool2)
-        dense = Dense(units=num_outputs, kernel_initializer="he_normal",
-                      activation="softmax")(flatten1)
+        output = Conv2D(200,(1,1), use_bias=False ,padding='same',kernel_initializer='he_normal',
+                        activation="softmax", kernel_regularizer=regularizers.l2(weight_decay))(pool2)
+        #last_conv
+        #flatten1 = Flatten()(pool2)
+        #output = Dense(units=num_outputs, kernel_initializer="he_normal",
+                      #activation="softmax")(last_conv)
+        #output = (kernel_initializer="he_normal",
+                      #activation="softmax")(last_conv)
 
-        model = Model(inputs=input, outputs=dense)
+        model = Model(inputs=input, outputs=output)
         return model
 
     @staticmethod
