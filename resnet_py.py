@@ -257,4 +257,4 @@ class ResnetBuilder(object):
 
     @staticmethod
     def build_resnet_152(input_shape, num_outputs):
-return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 8, 36, 3])
+        return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 8, 36, 3])
